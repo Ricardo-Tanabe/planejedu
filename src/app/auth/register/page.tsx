@@ -4,6 +4,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+function isValidEmail(email: string) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+}
+
 export default function RegisterPage() {
     const router = useRouter();
     const [email, setEmail] = useState("");
@@ -16,6 +20,11 @@ export default function RegisterPage() {
 
         if (!email.trim() || !password.trim()) {
             setError("Preencha todos os campos");
+            return;
+        }
+
+        if (!isValidEmail(email)) {
+            setError("E-mail inválido");
             return;
         }
 
@@ -33,8 +42,12 @@ export default function RegisterPage() {
             }
 
             router.push("/auth/login")
-        } catch {
-            setError("Erro inesperado");
+        } catch (error) {
+            if (error instanceof Error) {
+                setError(error.message)
+            } else {
+                setError("Erro inesperado");
+            }
         } finally {
             setLoading(false);
         }
@@ -54,6 +67,7 @@ export default function RegisterPage() {
                     placeholder="E-mail"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
+                    maxLength={100}
                     disabled={loading}
                 />
                 <input
@@ -63,6 +77,7 @@ export default function RegisterPage() {
                     placeholder="Senha"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
+                    maxLength={64}
                     disabled={loading}
                 />
                 <button
