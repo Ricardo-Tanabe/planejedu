@@ -57,6 +57,7 @@ export default function LoginPage() {
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     type="email"
+                    maxLength={100}
                     disabled={loading}
                 />
 
@@ -67,6 +68,8 @@ export default function LoginPage() {
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     type="password"
+                    minLength={6}
+                    maxLength={64}
                     disabled={loading}
                 />
 
