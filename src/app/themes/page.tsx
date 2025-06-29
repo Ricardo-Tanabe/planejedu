@@ -63,6 +63,8 @@ export default function ThemesPage() {
                     placeholder="Novo tema"
                     className="border p-2 flex-1 rounded text-gray-600 placeholder:text-gray-400
                     focur:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                    minLength={1}
+                    maxLength={100}
                     disabled={loading}
                 />
                 <button
