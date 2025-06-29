@@ -59,6 +59,11 @@ export default function Home() {
   }
 
   async function updateTheme(id: string, title: string) {
+    if (!title.trim()) {
+      setError("O título não pode estar vazio.");
+      return;
+    }
+    
     setLoading(true);
     try {
       const res = await fetch(`/api/themes/${id}`, {
@@ -109,6 +114,8 @@ export default function Home() {
           focus:outline-none focus:ring-2 focus:ring-blue-500
           sm:rounded max-sm:rounded-l-md"
           placeholder="Novo tema"
+          minLength={1}
+          maxLength={100}
           disabled={loading}
         />
         <button
@@ -144,6 +151,8 @@ export default function Home() {
                 onChange={e => setEditingTheme({ ...editingTheme, title: e.target.value })}
                 className="border p-1 flex-1 text-gray-700 rounded focus:outline-none focus:ring-2
                 focus:ring-blue-500"
+                minLength={1}
+                maxLength={100}
               />
             ) : (
               <Link
