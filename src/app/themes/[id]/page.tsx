@@ -79,6 +79,12 @@ export default function ThemePage() {
 
     async function saveTopic() {
         if (!editingTopic) return;
+        
+        if (!editingTopic.title.trim()) {
+            setError("O título não pode estar vazio.");
+            return;
+        }
+        
         setLoading(true);
 
         try {
@@ -147,6 +153,7 @@ export default function ThemePage() {
                     className="border border-gray-300 p-2 rounded text-gray-600 placeholder:text-gray-400
                     focus:outline-none focurs:ring-2 focus:ring-blue-500"
                     placeholder="Título do tópico"
+                    maxLength={100}
                     disabled={loading}
                 />
                 <textarea
@@ -156,6 +163,7 @@ export default function ThemePage() {
                     className="border border-gray-300 p-2 rounded text-gray-600 placeholder:text-gray-400
                     focus:outline-none focurs:ring-2 focus:ring-blue-500 resize-none"
                     placeholder="Descrição"
+                    maxLength={500}
                     disabled={loading}
                 />
                 <button
@@ -187,13 +195,16 @@ export default function ThemePage() {
                                 onChange={e => setEditingTopic({ ...editingTopic, title: e.target.value })}
                                 className="border p-2 mb-2 text-gray-700 rounded focus:outline-none
                                 focus:ring-2 focus:ring-blue-500"
+                                maxLength={100}
                                 disabled={loading}
                             />
-                            <input
+                            <textarea
                                 value={editingTopic.content || ""}
                                 onChange={e => setEditingTopic({ ...editingTopic, content: e.target.value })}
+                                rows={2}
                                 className="border p-2 mb-2 text-gray-700 rounded focus:outline-none
                                 focus:ring-2 focus:ring-blue-500"
+                                maxLength={500}
                                 disabled={loading}
                             />
                             <button
